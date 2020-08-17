@@ -1,12 +1,9 @@
-let inputtedInfo = document.getElementById('inputted-info');
-let songList = document.getElementById('song-list');
+const inputtedInfo = document.getElementById('inputted-info');
+const songList = document.getElementById('song-list');
 
 function songSearch() {
-
     fetch('https://api.lyrics.ovh/suggest/' + inputtedInfo.value)
-
         .then(response => response.json())
-
         .then(json => {
             console.log(json);
             const fetchSongItem = () => {
@@ -23,18 +20,15 @@ function songSearch() {
 
 
 const lyricSearch = (i) => {
-
     let songTitle = document.getElementById(`song-title-${i}`);
     let artistName = document.getElementById(`artist-name-${i}`);
-
     fetch("https://api.lyrics.ovh/v1/" + artistName.innerText + '/' + songTitle.innerText)
         .then(response => response.json())
         .then(json => {
             document.getElementById('lyric-title').innerText = songTitle.innerText;
-            document.querySelector('.lyric').innerText = json.lyrics;
-        });
-
-
-
-        
+            if (json.lyrics == undefined){
+                document.querySelector('.lyric').innerText = "Lyric for this song is not available";
+            }  else{document.querySelector('.lyric').innerText = json.lyrics};
+        });   
 };
+
